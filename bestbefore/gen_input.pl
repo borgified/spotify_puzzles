@@ -7,9 +7,9 @@ my $entries=100;
 while($entries>0){
 	$entries--;
 
-	my $day = int(rand(32))+1;
-	my $month = int(rand(13))+1;
-	my $year = int(rand(1000))+2000;
+	my $day = int(rand(30))+1;
+	my $month = int(rand(11))+1;
+	my $year = int(rand(999))+2000;
 
 	if($day<10 && (int(rand(2)) == 0)){
 		$day=sprintf("%02d",$day);
@@ -19,14 +19,11 @@ while($entries>0){
 		$month=sprintf("%02d",$month);
 	}
 
-
 	if($year<2010 && (int(rand(2)) == 0)){
 		$year=~/\d\d\d(\d)/;
-		print "$year\n";
 		$year=$1;
 	}elsif($year<2100 && (int(rand(2)) == 0)){
 		$year=~/\d\d(\d\d)/;
-		print "$year\n";
 		$year=$1;
 	}
 
