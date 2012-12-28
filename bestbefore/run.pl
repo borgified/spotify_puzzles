@@ -8,6 +8,9 @@ sub main{
 	open(INPUT,"input") or die "can't open $!";
 	while(defined(my $line=<INPUT>)){
 		chomp($line);
+		if($line=~/^#/){ #skip commented lines
+			next;
+		}
 		my($a,$b,$c)=split(/\//,$line);
 
 		my @date=($a,$b,$c);
@@ -22,20 +25,40 @@ sub main{
 		my @alltry=([@try],[@try2],[@try3],[@try4],[@try5],[@try6]);
 
 		my $legal=0;
+		my @legal_dates;
 		foreach my $date (@alltry){
 			if(&is_legal(@$date)){
-				print "@$date\n";
+				push(@legal_dates,&format_date(@$date));
 				$legal=1;
 			}
 		}
 		if($legal == 0){
 			print "$line is illegal\n";
+		}else{
+			@legal_dates=sort(@legal_dates);
+			shift(@legal_dates)=~/(\d\d\d\d)(\d\d)(\d\d)/;
+			print "$line $1-$2-$3\n";
 		}
 	}
 }
 &main;
 
+#input: 3 item array ($month, $day, $year)
+#output: a string: YYYYMMDD
+sub format_date{
+	my($month,$day,$year)=@_;
 
+	$month=sprintf("%02d",$month);
+	$day=sprintf("%02d",$day);
+
+	if($year<1000){
+		$year=$year+2000;
+	}
+
+	my $output=$year.$month.$day;
+
+	return $output;
+}
 
 
 
