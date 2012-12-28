@@ -9,7 +9,6 @@ sub main{
 	while(defined(my $line=<INPUT>)){
 		chomp($line);
 		my($a,$b,$c)=split(/\//,$line);
-		print "$a $b $c\n";
 
 		my @date=($a,$b,$c);
 
@@ -22,12 +21,16 @@ sub main{
 
 		my @alltry=([@try],[@try2],[@try3],[@try4],[@try5],[@try6]);
 
+		my $legal=0;
 		foreach my $date (@alltry){
 			if(&is_legal(@$date)){
 				print "@$date\n";
+				$legal=1;
 			}
 		}
-
+		if($legal == 0){
+			print "$line is illegal\n";
+		}
 	}
 }
 &main;
@@ -41,6 +44,9 @@ sub main{
 #output: 1 if leap year, 0 if not
 sub is_leap{
 	my($year)=@_;
+	if($year<1000){
+		$year=$year+2000;
+	}
 	my $leap=0;
 	if(($year % 4) == 0){
 		$leap=1;
@@ -64,12 +70,12 @@ sub is_legal{
 	my($month,$day,$year)=@_;
 
 	my %max_days = (
-		1	=> '31',
-		2	=> '28',
-		3	=> '31',
+		1 => '31',
+		2 => '28',
+		3 => '31',
 		4 => '30',
-		5	=> '31',
-		6	=> '30',
+		5 => '31',
+		6 => '30',
 		7 => '31',
 		8 => '31',
 		9 => '30',
@@ -80,12 +86,12 @@ sub is_legal{
 
 
 	my %max_days_leap = (
-		1	=> '31',
-		2	=> '29',
-		3	=> '31',
+		1 => '31',
+		2 => '29',
+		3 => '31',
 		4 => '30',
-		5	=> '31',
-		6	=> '30',
+		5 => '31',
+		6 => '30',
 		7 => '31',
 		8 => '31',
 		9 => '30',
