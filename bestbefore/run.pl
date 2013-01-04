@@ -5,7 +5,11 @@ use strict;
 
 sub main{
 
-	open(INPUT,"input") or die "can't open $!";
+	if(defined($ARGV[0])){
+		open(INPUT,"$ARGV[0]") or die "can't open $!";
+	}else{
+		open(INPUT,"input") or die "can't open $!";
+	}
 	while(defined(my $line=<INPUT>)){
 		chomp($line);
 		if($line=~/^#/){ #skip commented lines
@@ -37,7 +41,8 @@ sub main{
 		}else{
 			@legal_dates=sort(@legal_dates);
 			shift(@legal_dates)=~/(\d\d\d\d)(\d\d)(\d\d)/;
-			print "$line $1-$2-$3\n";
+			#print "$line $1-$2-$3\n";
+			print "$1-$2-$3\n";
 		}
 	}
 }
